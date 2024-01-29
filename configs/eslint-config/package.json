@@ -1,0 +1,11 @@
+{
+  "name": "eslint-config-custom",
+  "license": "MIT",
+  "main": "config.js",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@vercel/style-guide": "^5.1.0",
+    "eslint-config-turbo": "^1.10.16"
+  }
+}

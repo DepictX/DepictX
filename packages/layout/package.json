@@ -1,5 +1,5 @@
 {
-  "name": "engine",
+  "name": "layout",
   "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
@@ -19,9 +19,12 @@
     "@types/node": "^18.15.11",
     "eslint": "^8.53.0",
     "eslint-config-custom": "workspace:*",
-    "ts-config": "workspace:*",
     "typescript": "^5.0.4",
+    "ts-config": "workspace:*",
     "vite": "^4.2.1",
     "vite-config": "workspace:*"
+  },
+  "dependencies": {
+    "engine": "workspace:^"
   }
 }

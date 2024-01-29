@@ -1,15 +1,15 @@
-export class BaseComponent {
-  componentWillLayout() {}
-  componentDidLayout() {}
+import type { Fiber } from "../../fiber";
 
-  componentWillMount() {}
-  componentDidMount() {}
+export abstract class LayoutPlugin {
+  static get type() {
+    throw new Error("Static property 'type' must be implemented in derived classes");
+  }
 
-  componentWillUnmount() {}
-  componentDidUnmount() {}
+  static layout(fiber: Fiber) {
+    throw new Error('This is an abstract static method, it must be implemented in derived classes.');
+  };
 
-  componentWillUpdate() {}
-  componentDidUpdate() {}
-
-  setState() {}
+  static draw(renderObject: any) {
+    throw new Error('This is an abstract static method, it must be implemented in derived classes.');
+  }
 }

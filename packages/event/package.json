@@ -8,6 +8,7 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "start": "vite preview",
+    "lint": "eslint \"src/**/*.ts\"",
     "type-check": "tsc"
   },
   "type": "module",
@@ -16,7 +17,10 @@
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^18.15.11",
+    "eslint": "^8.53.0",
+    "eslint-config-custom": "workspace:*",
     "typescript": "^5.0.4",
+    "ts-config": "workspace:*",
     "vite": "^4.2.1",
     "vite-config": "workspace:*"
   }

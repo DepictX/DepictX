@@ -6,31 +6,85 @@
 # Core
 流程示意：
 1. DSL -> Element
-2. Element -> RenderObject
-3. Measure RenderObject
+2. Element -> Node
+3. Measure Node
 4. Bind Event
 5. Paint
 
+## 更新流程
+1. setState
+2. mark node dirty and analysis all effect nodes，add to dirty list,
+3. In micro task, iterate dirty list:
+   1. if dirty signal is children, call setter & rebuild tree & remeasure & repaint
+   2. if dirty signal is style
+      1. if style effect layout, remeasure & repaint
+      2. if style just effect paint, repaint
+
 # Engine
-定义 DSL 规范，并将 DSL 生成带有排版信息的 RenderObject
+定义 DSL 规范，并将 DSL 生成带有排版信息的 Node
+
+# Renderer
+将 Node 绘制到 Canvas 画布上
+
+# Layout
+提供 DSL 组件并提供排版能力
 ## 布局 DSL
-### Flow
 ### Flex
 ### Grid
 ### Absolute
 ### Fixed
-### Inline
+### ScrollView
 
 ## Box DSL
 ### View
 ### Text
-### ScrollView
-
-# View
-将 RenderObject 绘制到 Canvas 画布上
-
-# State
-维护选区等状态
+### Line
+### Polygon
+### Circle
+### Embed
 
 # Event
 交互事件相关实现
+
+# Demo
+## Layout 使用方式
+
+``` tsx
+import { render, useSignal } from '@DepictX/engine';
+import { Flex, View, Absolute, ScrollView } from '@DepictX/layout';
+import { useSelectionChange, setSelection } from '@DepictX/selection';
+
+function CustomComponent() {
+  const [color, setColor] = useSignal('red');
+  const selection = useSelection();
+  const [top, setTop] = useSignal(0);
+
+  useSelectionChange(() => {
+
+  });
+
+  useScroll(( event: { target: Node, scrollTop: number }) => {
+    setTop(scrollTop - xxxx);
+  });
+
+  return (
+    <Flex direction="column" ref={node}>
+      <View
+        id="table"
+        ref={Node}
+        style={{ border: '1px', backgroundColor: color() }}
+        onLayout={(metrics) => {
+          if (metrics.width > 100) setColor('blue');
+        }}
+        onClick={() => {}}
+      >
+        <Absolute top={}>
+          <ScrollView></ScrollView>
+        </Absolute>
+      </View>
+    </Flex>
+  )
+}
+
+render(<CustomComponent />, canvas);
+```

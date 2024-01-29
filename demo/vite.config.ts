@@ -1,6 +1,7 @@
 import { PluginOption, defineConfig } from 'vite'
 import * as defaultConfig from 'vite-config'
 // import react from '@vitejs/plugin-react'
+// @ts-ignore
 import { transformSync } from '@babel/core';
 import { resolve } from 'path'
 
@@ -9,7 +10,7 @@ export default defineConfig({
   build: {
     minify: false,
     rollupOptions: {
-      input: resolve(__dirname, 'src/index.ts')
+      input: resolve(__dirname, 'index.html')
     }
   },
   plugins: [
