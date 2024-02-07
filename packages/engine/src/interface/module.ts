@@ -1,4 +1,4 @@
-import type { Fiber } from "../fiber";
+import { Node } from "../node";
 
 /**
  * Module 基本类型定义
@@ -14,7 +14,7 @@ export interface Module {
 export interface ViewModule extends Module {
   type: 'View'
 
-  draw: (canvas: HTMLCanvasElement, fiber: Fiber) => void
+  draw: (canvas: HTMLCanvasElement, node: Node) => void
 }
 
 export interface LayoutModule extends Module {

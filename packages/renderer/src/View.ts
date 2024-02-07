@@ -1,5 +1,6 @@
-import { Fiber, ViewModule } from "engine";
+import { ViewModule } from "engine";
 import { drawFiber } from "./drawer";
+import { Node } from "engine/src/node";
 
 export class View implements ViewModule {
   type: 'View' = 'View'
@@ -12,11 +13,11 @@ export class View implements ViewModule {
 
   }
 
-  draw(canvas: HTMLCanvasElement, fiber: Fiber) {
+  draw(canvas: HTMLCanvasElement, node: Node) {
     const ctx = canvas.getContext('2d');
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawFiber(ctx, fiber);
+      drawFiber(ctx, node);
     }
   }
 }

@@ -1,21 +1,14 @@
-import type { Fiber } from "../../fiber";
-import type { LayoutPlugin } from "../Base";
+import { Node } from "../../node";
 
-export class Flex implements LayoutPlugin {
-  static type = 'flex';
+export * from './Flex';
 
-  static layout(fiber: Fiber): void {
-    flexLayout(fiber);
-  }
-}
-
-function flexLayout(fiber: Fiber) {
-  const flexDirection = fiber.props.flexDirection || 'row';
-  const alignItems = fiber.props.alignItems || 'stretch';
-  const justifyContent = fiber.props.justifyContent || 'flex-start';
+export function flexLayout(node: Node) {
+  const flexDirection = node.props.flexDirection || 'row';
+  const alignItems = node.props.alignItems || 'stretch';
+  const justifyContent = node.props.justifyContent || 'flex-start';
 
   if (flexDirection === 'row' || flexDirection === 'row-reverse') {
-    flexDirectionRow(fiber, flexDirection, alignItems, justifyContent);
+    flexDirectionRow(node, flexDirection, alignItems, justifyContent);
   }
   // else {
   //   return flexDirectionColumn(virtualDom, flexDirection, alignItems, justifyContent);
@@ -24,26 +17,22 @@ function flexLayout(fiber: Fiber) {
 
 
 function flexDirectionRow(
-  fiber: Fiber,
+  node: Node,
   flexDirection: string,
   alignItems: string,
   justifyContent: string
 ) {
   let totalFlex = 0;
-  const children: Fiber[] = [];
-
-  for (let child = fiber.child; child; child = child.sibling) {
-    children.push(child);
-  }
+  const children = node.children;
 
   children.forEach((child) => {
     totalFlex += child.props.flex || 1;
   });
 
-  if (!fiber.metrics) {
-    fiber.metrics = {
-      width: fiber.return?.metrics?.width || 100,
-      height: fiber.props.style?.height || 0,
+  if (!node.metrics) {
+    node.metrics = {
+      width: node.parent?.metrics?.width || 100,
+      height: node.props.style?.height || 0,
       left: 0,
       top: 0,
     };
@@ -53,7 +42,7 @@ function flexDirectionRow(
   let maxHeight = 0;
   children.forEach((child) => {
     const flex = child.props.flex || 1;
-    const childWidth = (flex / totalFlex) * fiber.metrics!.width;
+    const childWidth = (flex / totalFlex) * node.metrics!.width;
 
     child.metrics = {
       width: childWidth,
@@ -80,7 +69,7 @@ function flexDirectionRow(
 
   let containerHeight = maxHeight;
   if (alignItems === 'stretch') {
-    containerHeight = fiber.metrics.height || maxHeight;
+    containerHeight = node.metrics.height || maxHeight;
     children.forEach((child) => {
       child.metrics!.height = containerHeight;
     });

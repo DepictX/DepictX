@@ -1,7 +1,6 @@
 import { createElement, Element } from "./element";
 
 export * from './layouts/Base';
-export * from './fiber';
 export * from './core';
 export * from './layouts';
 export * from './hooks';

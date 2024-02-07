@@ -1,12 +1,9 @@
-export interface IElementProps {
-  children?: Element[];
-  [key: string]: any
-}
+import { IElement, IElementProps, IElementType } from "../interface";
 
-export class Element {
-  static create(type: Function | string, key?: string, ref?: any, props?: IElementProps) {
+export class Element implements IElement {
+  static create(type: IElementType, key?: string, ref?: any, props?: IElementProps) {
     return new Element(type, key, ref, props);
   }
 
-  constructor(public type: Function | string, public key?: string, public ref?: any, public props?: IElementProps) {}
+  constructor(public type: IElementType, public key?: string, public ref?: any, public props?: IElementProps) {}
 }

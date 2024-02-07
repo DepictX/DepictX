@@ -1,5 +1,6 @@
-import { Fiber, LayoutModule } from "engine";
-import { Flex } from "engine/src/layouts/Flex";
+import { LayoutModule } from "engine";
+import { Flex, flexLayout } from "engine/src/layouts/Flex";
+import { Node } from "engine/src/node";
 
 export class Layout implements LayoutModule {
   type: "Layout" = "Layout";
@@ -14,26 +15,26 @@ export class Layout implements LayoutModule {
 
   }
 
-  measure(fiber: Fiber, containerMetrics: any) {
-    const stack: Fiber[] = [fiber];
+  measure(root: Node, containerMetrics: any) {
+    const stack: Node[] = [root];
 
     while (stack.length) {
-      const fiberNode = stack.pop()!;
-      const isRoot = fiberNode === fiber;
+      const node = stack.pop()!;
+      const isRoot = node === root;
 
-      for (let child = fiberNode.child; child; child = child.sibling) {
+      for (let child = node.firstChild; child; child = child.nextSibling) {
         stack.push(child);
       }
 
-      if (!fiberNode.metrics) {
-        if (fiberNode.type === Flex.type) {
-          Flex.layout(fiberNode);
+      if (!node.metrics) {
+        if (node.type === Flex) {
+          flexLayout(node);
         } else {
-          fiberNode.metrics = {
-            width: isRoot ? containerMetrics.width : fiberNode.return!.metrics!.width,
+          node.metrics = {
+            width: isRoot ? containerMetrics.width : node.parent!.metrics!.width,
             height: 20,
             left: 0,
-            top: 30 * fiberNode.index + 16,
+            top: 30 * node.index() + 16,
           };
         }
       }

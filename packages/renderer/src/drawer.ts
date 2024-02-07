@@ -1,25 +1,22 @@
-import { Fiber } from "engine";
+import { Text } from "engine";
+import { Node } from "engine/src/node";
 
-export function drawFiber(ctx: CanvasRenderingContext2D, fiber: Fiber) {
-  const { metrics } = fiber;
+export function drawFiber(ctx: CanvasRenderingContext2D, node: Node) {
+  const { metrics } = node;
 
   if (!metrics) throw new Error('Fiber is not measured!');
 
-  if (fiber.type === 'Symbol[string]') {
-    const text = typeof fiber.props.nodeValue === 'function' ? fiber.props.nodeValue() : fiber.props.nodeValue;
-    ctx.fillStyle = fiber.props.style?.color || 'black';
-    ctx.font = fiber.props.style?.font || '16px Arial';
+  if (node.type === Text) {
+    const text = node.props.content;
+    ctx.fillStyle = node.props.style?.color || 'black';
+    ctx.font = node.props.style?.font || '16px Arial';
     ctx.fillText(text, metrics.left, metrics.top);
   } else {
-    ctx.fillStyle = fiber.props.style?.backgroundColor || 'white';
+    ctx.fillStyle = node.props.style?.backgroundColor || 'white';
     ctx.fillRect(metrics.left, metrics.top, metrics.width, metrics.height);
   }
 
-  const children: Fiber[] = [];
-
-  for (let child = fiber.child; child; child = child.sibling) {
-    children.push(child);
-  }
+  const children = node.children;
 
   // 绘制子节点
   children.forEach((child) => {

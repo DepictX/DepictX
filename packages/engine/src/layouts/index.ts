@@ -41,3 +41,7 @@ export class Layout implements LayoutModule {
     }
   }
 }
+
+export * from './Flex';
+export * from './View';
+export * from './Text';
