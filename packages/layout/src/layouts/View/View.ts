@@ -1,4 +1,4 @@
-import { IDefaultProps, INTERNAL, InternalLayout } from "../../interface";
+import { IDefaultProps, INTERNAL, InternalLayout } from "engine";
 
 export const VIEW_SYMBOL = Symbol('View');
 

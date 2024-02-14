@@ -1,4 +1,5 @@
-import { Engine, createEffect, createSignal, Flex, View, Text } from 'engine';
+import { Engine, createEffect, createSignal } from 'engine';
+import { Flex, View, Text } from 'layout';
 import { View as ViewModule } from 'renderer';
 import { Layout } from 'layout';
 

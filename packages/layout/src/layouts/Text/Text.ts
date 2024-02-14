@@ -1,4 +1,4 @@
-import { INTERNAL, InternalLayout } from "../../interface";
+import { INTERNAL, InternalLayout } from "engine";
 
 export const TEXT_SYMBOL = Symbol('Text');
 

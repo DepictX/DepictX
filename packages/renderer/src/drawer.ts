@@ -1,4 +1,4 @@
-import { Text } from "engine";
+import { Text } from "layout";
 import { Node } from "engine/src/node";
 
 export function drawFiber(ctx: CanvasRenderingContext2D, node: Node) {

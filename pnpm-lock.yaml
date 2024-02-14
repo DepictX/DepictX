@@ -159,6 +159,9 @@ importers:
       engine:
         specifier: workspace:^
         version: link:../engine
+      layout:
+        specifier: workspace:^
+        version: link:../layout
     devDependencies:
       '@types/node':
         specifier: ^18.15.11

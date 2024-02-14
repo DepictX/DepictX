@@ -1,8 +1,8 @@
-import { Node } from "../../node";
+import { INode } from "engine";
 
 export * from './Flex';
 
-export function flexLayout(node: Node) {
+export function flexLayout(node: INode) {
   const flexDirection = node.props.flexDirection || 'row';
   const alignItems = node.props.alignItems || 'stretch';
   const justifyContent = node.props.justifyContent || 'flex-start';
@@ -17,7 +17,7 @@ export function flexLayout(node: Node) {
 
 
 function flexDirectionRow(
-  node: Node,
+  node: INode,
   flexDirection: string,
   alignItems: string,
   justifyContent: string

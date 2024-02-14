@@ -1,5 +1,5 @@
 import { LayoutModule } from "engine";
-import { Flex, flexLayout } from "engine/src/layouts/Flex";
+import { Flex, flexLayout } from "./layouts";
 import { Node } from "engine/src/node";
 
 export class Layout implements LayoutModule {

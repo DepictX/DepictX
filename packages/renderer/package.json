@@ -25,6 +25,7 @@
     "vite-config": "workspace:*"
   },
   "dependencies": {
-    "engine": "workspace:^"
+    "engine": "workspace:^",
+    "layout": "workspace:^"
   }
 }

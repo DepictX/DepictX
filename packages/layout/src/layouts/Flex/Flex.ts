@@ -1,4 +1,4 @@
-import { IDefaultProps, IElement, INTERNAL, InternalLayout } from "../../interface";
+import { IDefaultProps, IElement, INTERNAL, InternalLayout } from "engine";
 
 export const FLEX_SYMBOL = Symbol('Flex');
 

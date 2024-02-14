@@ -1,6 +1,6 @@
-import { IMetrics, IStyle, InternalLayout } from '../interface';
+import { IMetrics, INode, IStyle, InternalLayout } from '../interface';
 
-export class Node {
+export class Node implements INode {
   metrics: IMetrics | null = null;
 
   layoutDirty = true;
@@ -11,9 +11,9 @@ export class Node {
 
   props: any;
 
-  scrollTop: number = 0;
+  scrollTop?: number = 0;
 
-  scrollLeft: number = 0;
+  scrollLeft?: number = 0;
 
   parent: Node | null = null;
 
