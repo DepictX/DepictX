@@ -1,5 +1,4 @@
-import { LayoutModule } from "engine";
-import { Flex, flexLayout } from "./layouts";
+import { IConstrains, IMeasureContext, INode, LayoutModule, MEASUREMENTS } from "engine";
 import { Node } from "engine/src/node";
 
 export class Layout implements LayoutModule {
@@ -16,28 +15,31 @@ export class Layout implements LayoutModule {
   }
 
   measure(root: Node, containerMetrics: any) {
-    const stack: Node[] = [root];
+    const constrains = new Map<INode, IConstrains>();
+    const containerConstrains = containerMetrics;
+    const getNodeConstrains = (node: INode) => constrains.get(node)!;
 
-    while (stack.length) {
-      const node = stack.pop()!;
-      const isRoot = node === root;
+    root.descendants({ self: true, post: (node) => {
+      const constrain = node.type[MEASUREMENTS].prepare(node, {
+        containerConstrains,
+        getNodeConstrains
+      });
+      constrains.set(node, constrain);
+    }});
 
-      for (let child = node.firstChild; child; child = child.nextSibling) {
-        stack.push(child);
-      }
+    const skips = new Set<INode>();
 
-      if (!node.metrics) {
-        if (node.type === Flex) {
-          flexLayout(node);
-        } else {
-          node.metrics = {
-            width: isRoot ? containerMetrics.width : node.parent!.metrics!.width,
-            height: 20,
-            left: 0,
-            top: 30 * node.index() + 16,
-          };
-        }
-      }
-    }
+    root.descendants({
+      self: true,
+      pre(node, storage) {
+        const ctx: IMeasureContext = { storage, containerConstrains, getNodeConstrains };
+        (!node.parent || !skips.has(node.parent)) && node.type[MEASUREMENTS].measure(node, ctx);
+        ctx.skipChildren && skips.add(node);
+      },
+      post(node, storage) {
+        const ctx = { storage, containerConstrains, getNodeConstrains };
+        node.type[MEASUREMENTS].postMeasure?.(node, ctx);
+      },
+    });
   }
 }

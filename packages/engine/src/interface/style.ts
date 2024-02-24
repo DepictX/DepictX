@@ -36,8 +36,14 @@ export interface IStyle {
   borderWidth?: string;
   borderRadius?: string;
 
-  width?: string;
-  height?: string;
+  width?: number;
+  height?: number;
+
+  minWidth?: number;
+  maxWidth?: number;
+
+  minHeight?: number;
+  maxHeight?: number;
 
   padding?: string;
   paddingLeft?: string;

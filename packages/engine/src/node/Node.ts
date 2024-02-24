@@ -94,6 +94,34 @@ export class Node implements INode {
     }
   }
 
+  descendants(config: {
+    /**
+     * if true will traverse itself
+     */
+    self?: boolean;
+    /**
+     * pre-order traverse, return true will stop traverse children
+     */
+    pre?: (node: Node, storage: {[key: string]: any}) => boolean | void;
+    /**
+     * post-order traverse, return true will stop traverse children
+     */
+    post?: (node: Node, storage: {[key: string]: any}) => boolean | void;
+  }) {
+    const { self, pre, post } = config;
+    if (!pre && !post) return;
+
+    const storage = {};
+
+    if (self && pre?.(this, storage)) return;
+
+    this.children.forEach((child) => {
+      child.descendants({ pre, post, self: true });
+    });
+
+    if (self && post?.(this, storage)) return;
+  }
+
   markDirty() {
     this.viewDirty = true;
     this.layoutDirty = true;

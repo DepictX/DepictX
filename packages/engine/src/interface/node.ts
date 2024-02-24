@@ -1,9 +1,11 @@
+import { InternalLayout } from "./layout";
 import { IMetrics } from "./renderObject";
 import { IStyle } from "./style";
 
-export interface INode {
+export interface INode<T = any> {
+  type: InternalLayout;
   metrics: IMetrics | null;
-  props: any;
+  props: T;
   style: IStyle | null;
   scrollTop?: number;
   scrollLeft?: number;

@@ -1,19 +1,23 @@
 import { Text } from "layout";
 import { Node } from "engine/src/node";
 
-export function drawFiber(ctx: CanvasRenderingContext2D, node: Node) {
+export function drawFiber(ctx: CanvasRenderingContext2D, node: Node, offsets: { left: number; top: number }) {
   const { metrics } = node;
 
   if (!metrics) throw new Error('Fiber is not measured!');
+
+  const left = metrics.left + offsets.left;
+  const top = metrics.top + offsets.top;
 
   if (node.type === Text) {
     const text = node.props.content;
     ctx.fillStyle = node.props.style?.color || 'black';
     ctx.font = node.props.style?.font || '16px Arial';
-    ctx.fillText(text, metrics.left, metrics.top);
+    ctx.textBaseline = 'top';
+    ctx.fillText(text, left, top);
   } else {
     ctx.fillStyle = node.props.style?.backgroundColor || 'white';
-    ctx.fillRect(metrics.left, metrics.top, metrics.width, metrics.height);
+    ctx.fillRect(left, top, metrics.width, metrics.height);
   }
 
   const children = node.children;
@@ -28,6 +32,6 @@ export function drawFiber(ctx: CanvasRenderingContext2D, node: Node) {
       width: childMetrics.width || 0,
       height: childMetrics.height || 0,
     };
-    drawFiber(ctx, child);
+    drawFiber(ctx, child, { left, top });
   });
 }

@@ -17,7 +17,7 @@ export class View implements ViewModule {
     const ctx = canvas.getContext('2d');
     if (ctx) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      drawFiber(ctx, node);
+      drawFiber(ctx, node, { left: 0, top: 0 });
     }
   }
 }

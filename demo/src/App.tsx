@@ -27,20 +27,27 @@ export function App(props) {
   const [show, setShow] = createSignal(true);
   const [color, setColor] = createSignal('#00f');
   const [text, setText] = createSignal('props text');
-  const [list, setList] = createSignal([]);
+  const [list, setList] = createSignal([1, 2, 3]);
   const __DEBUG__ = !!1;
   window.setShow = setShow;
   window.setText = setText;
   window.setList = setList;
   window.setColor = setColor;
   return (
-    <Flex>
-      <View style={{ color: () => color() }}>{__DEBUG__ ? (<TestClassComponent text={text} />) : null}</View>
-      {() => show() && props.children}
-      {() => list().map((_, index) => {
-        return <View><Text content={index} /></View>;
-      })}
-    </Flex>
+    <View>
+      <Flex>
+        <View style={{ color: () => color() }}>{__DEBUG__ ? (<TestClassComponent text={text} />) : null}</View>
+        {() => show() && props.children}
+        {() => list().map((_, index) => {
+          return <View><Text content={String(index)} /></View>;
+        })}
+      </Flex>
+      {() => list().map((_, index) => (
+        <View>
+          <Text content={`line${index + 1}`} />
+        </View>
+      ))}
+    </View>
   );
 }
 
@@ -53,4 +60,4 @@ engine.use(new ViewModule());
 const canvas = document.querySelector('#canvas');
 window.engine = engine;
 
-engine.render(<App><Text content='abc' /></App>, canvas);
+engine.render(<App><View><Text content='abc' /></View></App>, canvas);
