@@ -175,7 +175,7 @@ Flex[MEASUREMENTS] = {
               : width * Math.max(parseInt(basic), 100) * 100
           )
         );
-        const outOfSpace = supposeWidth && space > supposeWidth + (i ? gap : 0);
+        const outOfSpace = supposeWidth && space < supposeWidth + (i ? gap : 0);
 
         if (isWrap && outOfSpace) {
           // need a new line
@@ -192,7 +192,7 @@ Flex[MEASUREMENTS] = {
         lineItems.push({ child, supposeWidth });
       }
 
-      if (!isWrap) {
+      if (lineItems.length) {
         // share the space
         shareSpace(lineItems, space);
         justify(lineItems.map(({ child }) => child), node);
@@ -223,7 +223,7 @@ Flex[MEASUREMENTS] = {
         lastLineMaxHeight = maxHeight;
       });
 
-      node.metrics!.height = childrenGroups.reduce((h, group) => h + group[0].metrics!.height, 0)
+      node.metrics!.height = childrenGroups.reduce((h, group) => h + group[0].metrics!.height, 0) + (lines.length - 1) * gap;
     }
   },
 };

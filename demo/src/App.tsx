@@ -27,7 +27,7 @@ export function App(props) {
   const [show, setShow] = createSignal(true);
   const [color, setColor] = createSignal('#00f');
   const [text, setText] = createSignal('props text');
-  const [list, setList] = createSignal([1, 2, 3]);
+  const [list, setList] = createSignal([1, 2, 3, 4, 5, 6, 7, 8, 10]);
   const __DEBUG__ = !!1;
   window.setShow = setShow;
   window.setText = setText;
@@ -35,7 +35,7 @@ export function App(props) {
   window.setColor = setColor;
   return (
     <View>
-      <Flex>
+      <Flex gap={50} flexWrap='wrap'>
         <View style={{ color: () => color() }}>{__DEBUG__ ? (<TestClassComponent text={text} />) : null}</View>
         {() => show() && props.children}
         {() => list().map((_, index) => {

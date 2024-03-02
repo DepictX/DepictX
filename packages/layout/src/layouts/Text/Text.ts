@@ -1,10 +1,13 @@
-import { LAYOUT_TYPE, INode, InternalLayout, MEASUREMENTS, INLINE } from "engine";
+import { LAYOUT_TYPE, INode, InternalLayout, MEASUREMENTS, INLINE, IFontStyle } from "engine";
 import { DEFAULT_METRICS } from "../../consts";
+import { getCanvasContext } from "./utils";
+import { measureText } from "./measurement";
 
 export const TEXT_SYMBOL = Symbol('Text');
 
 interface ITextProps {
   content?: string;
+  style?: IFontStyle;
 }
 
 export const Text: InternalLayout<ITextProps> = (_props) => {
@@ -16,12 +19,22 @@ Text[MEASUREMENTS] = {
   prepare(node: INode<ITextProps>, ctx) {
     if (!node.metrics) node.metrics = { ...DEFAULT_METRICS };
 
+    const text = node.props.content || '';
+    const fontFamily = node.props.style?.fontFamily || 'Arial';
+    const fontSize = node.props.style?.fontSize || 16;
+
+    const { width } = measureText(text, fontFamily, fontSize)
+
     return {
-      fitContent: (node.props.content?.length || 0) * 16
+      fitContent: width
     }
   },
   measure(node, ctx) {
-    const width = (node.props.content?.length || 0) * 16;
+    const text = node.props.content || '';
+    const fontFamily = node.props.style?.fontFamily || 'Arial';
+    const fontSize = node.props.style?.fontSize || 16;
+
+    const { width } = measureText(text, fontFamily, fontSize)
     node.metrics!.width = width;
     node.metrics!.height = 30;
     node.metrics!.left = node.prevSibling ? node.prevSibling.metrics!.left + node.prevSibling.metrics!.width : 0;

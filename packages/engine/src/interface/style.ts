@@ -1,12 +1,13 @@
-export interface IStyle {
-  // Inline
+export interface IFontStyle {
   color?: string;
   fontSize?: number;
   fontFamily?: string;
   fontWeight?: number;
   fontStyle?: string;
   textDecoration?: string;
+}
 
+export interface IStyle {
   wordSpacing?: string;
   wordWrap?: string;
   whiteSpace?: string;

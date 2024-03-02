@@ -136,6 +136,13 @@ export class Engine {
     if (this.building) return;
     this.building = true;
     Promise.resolve().then(() => {
+      const constrain = {
+        height: this.container!.clientHeight,
+        width: this.container!.clientWidth,
+      };
+      // @ts-ignore
+      this.modules.Layout.measure(this.rootNode, constrain);
+
       // @ts-ignore
       this.modules.View.draw(this.container, this.rootNode);
       this.building = false;

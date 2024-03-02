@@ -1,10 +1,13 @@
-import { IConstrains, IMeasureContext, INode, LayoutModule, MEASUREMENTS } from "engine";
+import { IConstrains, IMeasureContext, INode, InternalLayout, LayoutModule, MEASUREMENTS } from "engine";
 import { Node } from "engine/src/node";
 
 export class Layout implements LayoutModule {
   type: "Layout" = "Layout";
 
-  plugins = [];
+  plugins: {
+    type: InternalLayout;
+
+  }[] = [];
 
   install(): void {
 
