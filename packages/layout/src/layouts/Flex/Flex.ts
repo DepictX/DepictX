@@ -213,14 +213,14 @@ Flex[MEASUREMENTS] = {
       const lines: number[] = ctx.storage.lines;
       const childrenGroups = lines.map((line, index) => children.slice(line, lines[index + 1]));
 
-      let lastLineMaxHeight = 0;
+      let lastTop = 0;
       childrenGroups.forEach((children, index) => {
         const maxHeight = children.reduce((max, child) => Math.max(max, child.metrics!.height!), 0);
         children.forEach(child => {
           child.metrics!.height = maxHeight;
-          child.metrics!.top = index ? lastLineMaxHeight + gap : 0;
+          child.metrics!.top = lastTop;
         });
-        lastLineMaxHeight = maxHeight;
+        lastTop += maxHeight + gap;
       });
 
       node.metrics!.height = childrenGroups.reduce((h, group) => h + group[0].metrics!.height, 0) + (lines.length - 1) * gap;
