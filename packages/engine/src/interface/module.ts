@@ -1,3 +1,4 @@
+import { Engine } from "../core";
 import { Node } from "../node";
 
 /**
@@ -6,7 +7,7 @@ import { Node } from "../node";
 export interface Module {
   type: string;
 
-  install: () => void;
+  install: (engine: Engine) => void;
 
   uninstall: () => void;
 }

@@ -1,3 +1,5 @@
-export const wordsMetricsOfFonts = new Map<string, Map<string, TextMetrics>>();
+import { ITextMetrics } from "./measurement";
 
-export const baselineOfFonts = new Map<string, number>();
+export const wordsMetricsOfFonts = new Map<string, Map<string, ITextMetrics>>();
+
+export const fontsMetrics = new Map<string, { height: number; baseline: number; }>();

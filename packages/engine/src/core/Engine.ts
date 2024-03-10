@@ -56,7 +56,7 @@ export class Engine {
     // check modules
 
     for (const module of Object.values(this.modules)) {
-      module.install();
+      module.install(this);
     }
   }
 

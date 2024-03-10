@@ -1,7 +1,7 @@
 import { Text } from "layout";
-import { Node } from "engine/src/node";
+import { INode } from "engine";
 
-export function drawFiber(ctx: CanvasRenderingContext2D, node: Node, offsets: { left: number; top: number }) {
+export function drawFiber(ctx: CanvasRenderingContext2D, node: INode, offsets: { left: number; top: number }) {
   const { metrics } = node;
 
   if (!metrics) throw new Error('Fiber is not measured!');

@@ -44,7 +44,8 @@ export function App(props) {
       </Flex>
       {() => list().map((_, index) => (
         <View>
-          <Text content={`line${index + 1}`} />
+          <Text content={`ABCDEFGHIJKLMNOPQRSTUVWXYZqwertyuioplkjhgfdsazxcvbnm${index + 1}`} />
+          <Text content={`xxxxxxxxxxxxxxx${index + 1}`} />
         </View>
       ))}
     </View>

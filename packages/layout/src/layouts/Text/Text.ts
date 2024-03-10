@@ -34,9 +34,9 @@ Text[MEASUREMENTS] = {
     const fontFamily = node.props.style?.fontFamily || 'Arial';
     const fontSize = node.props.style?.fontSize || 16;
 
-    const { width } = measureText(text, fontFamily, fontSize)
+    const { width, height } = measureText(text, fontFamily, fontSize)
     node.metrics!.width = width;
-    node.metrics!.height = 30;
+    node.metrics!.height = height;
     node.metrics!.left = node.prevSibling ? node.prevSibling.metrics!.left + node.prevSibling.metrics!.width : 0;
   },
 }
